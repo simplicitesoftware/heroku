@@ -11,7 +11,7 @@ A Heroku account and Heroku toolbelt installed. plese refer to [Heroku dev cente
 Deployment
 ----------
 
-Clone our [Tomcat launcher](https://github.com/simplicitesoftware/heroku-template) (if you are reading this file chances are this is already done ;-)
+Clone our [embedded Tomcat template](https://github.com/simplicitesoftware/heroku-template) (if you are reading this file chances are this is already done ;-)
 
 Replace the `webapps/ROOT` webapp folder by your Simplicit&eacute; sandbox webapp template, then add the `heroku` Git remote by:
 
