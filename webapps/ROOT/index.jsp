@@ -1,0 +1,1 @@
+It works! (<%= new java.util.Date() %>)

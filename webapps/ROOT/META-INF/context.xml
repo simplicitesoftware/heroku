@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Context>
+<Context useHttpOnly="false">
+
+	<Manager pathname="" />
+
+	<Environment
+		name="dataDir"
+		value="${catalina.base}/webapps/ROOT/WEB-INF"
+		type="java.lang.String"
+		override="true" />
+
+	<Resource
+		name="jdbc/test"
+		type="javax.sql.DataSource"
+		auth="Container"
+		maxActive="100" maxIdle="30" maxWait="10000"
+		username="sa" password=""
+		driverClassName="org.hsqldb.jdbcDriver"
+		url="jdbc:hsqldb:file:${catalina.base}/webapps/ROOT/WEB-INF/db/test;shutdown=true;sql.ignore_case=true"/>
+
+</Context>
