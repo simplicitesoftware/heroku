@@ -13,6 +13,9 @@ please refer to [Heroku dev center](https://devcenter.heroku.com/) for details
 
 Clone our [embedded Tomcat template](https://github.com/simplicitesoftware/heroku-template) (if you are reading this file chances are this is already done ;-)
 
+Get the Simplicit&eacute;&reg; sandbox template from our GIT repository
+(see [simplicite.io website](http://www.simplicite.io) for details on how to get access to this repository).
+
 Replace the default test `webapps/ROOT` webapp folder with your Simplicit&eacute; root webapp.
 
 If required you can customize the `webapps/ROOT/META-INF/context.xml` and/or `webapps/ROOT/WEB-INF/web.xml` to your needs (e.g. to add additional datasources).
