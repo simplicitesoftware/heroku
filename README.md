@@ -6,26 +6,57 @@ This is the embedded Tomcat template for Heroku designed for Simplicit&eacute;&r
 Prerequisites
 -------------
 
-A Heroku account and Heroku toolbelt installed. plese refer to [Heroku dev center](https://devcenter.heroku.com/)  for details
+Java JDK and Maven required to run locally.
 
-Deployment
-----------
+A Heroku account and Heroku toolbelt required to deploy to Heroku
+please refer to [Heroku dev center](https://devcenter.heroku.com/) for details
 
 Clone our [embedded Tomcat template](https://github.com/simplicitesoftware/heroku-template) (if you are reading this file chances are this is already done ;-)
 
-Replace the `webapps/ROOT` webapp folder by your Simplicit&eacute; sandbox webapp template, then add the `heroku` Git remote by:
-
-```
-heroku create [<your app name>]
-```
+Replace the default test `webapps/ROOT` webapp folder with your Simplicit&eacute; root webapp.
 
 If required you can customize the `webapps/ROOT/META-INF/context.xml` and/or `webapps/ROOT/WEB-INF/web.xml` to your needs (e.g. to add additional datasources).
 
-If required you can also add additional Java libs in `webapps/ROOT/WEB-INF/lib`
-and/or static JavaScript files in `webapps/ROOT/scripts`
-and/or static CSS/images files in `webapps/ROOT/images`
+If required you can also add:
 
-Commit your changes to the local copy of the Git repository `git commit <...>`, then deploy to Heroku by pushing to the `heroku` remote:
+- Additional Java libs in `webapps/ROOT/WEB-INF/lib`
+- Static JavaScript files in `webapps/ROOT/scripts`
+- Static CSS/images files in `webapps/ROOT/images`
+- Etc.
+
+Run locally
+-----------
+
+Build the package using Maven with:
+
+```
+mvn package
+```
+
+Then run the package with:
+
+```
+java -jar target/tomcat-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+```
+
+NB: a similar run command is in the `Procfile`
+
+Deploy on Heroku
+----------------
+
+Add the `heroku` remote to the cloned Git repository with:
+
+```
+heroku create [<your Heroku app name>]
+```
+
+Commit your changes locally in the Git repository:
+
+```
+git commit <...>
+```
+
+Then deploy to Heroku by:
 
 ```
 git push heroku master
