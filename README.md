@@ -1,7 +1,7 @@
-Heroku template for Simplicit&eacute;&reg;
-==========================================
+Heroku&reg; template for Simplicit&eacute;&reg;
+===============================================
 
-This is the embedded Tomcat template for Heroku designed for Simplicit&eacute;&reg; sandboxes.
+This is the embedded Tomcat template for Heroku&reg; designed for Simplicit&eacute;&reg; sandboxes.
 
 Prerequisites
 -------------
