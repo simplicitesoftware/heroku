@@ -70,3 +70,10 @@ Then deploy to Heroku by:
 ```
 git push heroku master
 ```
+
+_Note: to avoid pushing your changes to the default origin repository, we recommend that you remove the `origin` remote by:_
+
+```
+git remote rm origin
+```
+
