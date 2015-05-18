@@ -4,7 +4,7 @@ import java.io.File;
 
 import org.apache.catalina.startup.Tomcat;
 
-public class Launcher 
+public class Launcher
 {
 	public static void main(String[] args) {
 		try {
@@ -19,8 +19,9 @@ public class Launcher
 
 			tomcat.enableNaming();
 
-			String port = System.getenv("PORT");
-        		if (port == null || port.length() == 0) port = "8080";
+			String port = System.getenv("TOMCAT_HTTP_PORT");
+			if (port == null || port.length() == 0) port = System.getenv("PORT");
+			if (port == null || port.length() == 0) port = "8080";
 			tomcat.setPort(Integer.valueOf(port));
 
 			System.out.println("Deploying ROOT webapp");
