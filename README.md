@@ -47,10 +47,16 @@ NB: a similar run command is in the `Procfile`
 Deploy on Heroku
 ----------------
 
-Add the `heroku` remote to the cloned Git repository with:
+Add the `heroku` remote to the cloned Git repository by creating a new application:
 
 ```
 heroku create [<your Heroku app name>]
+```
+
+or, if the application already exists:
+
+```
+heroku git:remote -a <your Heroku app name>
 ```
 
 Commit your changes locally in the Git repository:
