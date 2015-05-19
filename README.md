@@ -16,16 +16,8 @@ Clone our [embedded Tomcat template](https://github.com/simplicitesoftware/herok
 Get the Simplicit&eacute;&reg; sandbox template from our GIT repository
 (see [simplicite.io website](http://www.simplicite.io) for details on how to get access to this repository).
 
-Replace the default test `webapps/ROOT` webapp folder with your Simplicit&eacute; root webapp.
-
-If required you can customize the `webapps/ROOT/META-INF/context.xml` and/or `webapps/ROOT/WEB-INF/web.xml` to your needs (e.g. to add additional datasources).
-
-If required you can also add:
-
-- Additional Java libs in `webapps/ROOT/WEB-INF/lib`
-- Static JavaScript files in `webapps/ROOT/scripts`
-- Static CSS/images files in `webapps/ROOT/images`
-- Etc.
+Put your **root** webapp in the `webapps/ROOT` folder. If this folder does not exists, a default minimalistic webapp is created at firt launch.
+A test root webapp is available in the `test` folder.
 
 Run locally
 -----------
@@ -59,9 +51,10 @@ or, if the application already exists:
 heroku git:remote -a <your Heroku app name>
 ```
 
-Commit your changes locally in the Git repository:
+Add and commit your changes locally in the Git repository:
 
 ```
+git add <...>
 git commit <...>
 ```
 
