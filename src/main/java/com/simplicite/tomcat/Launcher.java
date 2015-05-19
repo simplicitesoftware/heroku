@@ -25,16 +25,21 @@ public class Launcher
 			if (port == null || port.length() == 0) port = "8080";
 			tomcat.setPort(Integer.valueOf(port));
 
-			System.out.println("Deploying ROOT webapp");
+			System.out.print("Looking for ROOT webapp... ");
 			File root = new File("./webapps/ROOT");
 			if (!root.exists()) {
+				System.out.print("Creating... ");
 				root.mkdirs();
 				File index = new File(root.getPath() + "/index.jsp");
 				FileOutputStream fos = new FileOutputStream(index);
-				fos.write(new String("It works!").getBytes());
+				fos.write(new String("It works (<%= new java.util.Date() %>)!").getBytes());
 				fos.close();
 			}
+			System.out.println("Done");
+
+			System.out.print("Deploying ROOT webapp... ");
 			tomcat.addWebapp("", root.getAbsolutePath());
+			System.out.println("Done");
 
 			tomcat.start();
 
