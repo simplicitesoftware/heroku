@@ -1,6 +1,7 @@
 package com.simplicite.tomcat;
 
 import java.io.File;
+import java.io.FileOutputStream;
 
 import org.apache.catalina.startup.Tomcat;
 
@@ -25,7 +26,15 @@ public class Launcher
 			tomcat.setPort(Integer.valueOf(port));
 
 			System.out.println("Deploying ROOT webapp");
-			tomcat.addWebapp("", new File("./webapps/ROOT").getAbsolutePath());
+			File root = new File("./webapps/ROOT");
+			if (!root.exists()) {
+				root.mkdirs();
+				File index = new File(root.getPath() + "/index.jsp");
+				FileOutputStream fos = new FileOutputStream(index);
+				fos.write(new String("It works!").getBytes());
+				fos.close();
+			}
+			tomcat.addWebapp("", root.getAbsolutePath());
 
 			tomcat.start();
 
