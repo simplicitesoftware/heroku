@@ -69,3 +69,9 @@ _Note: to avoid pushing your changes to the default origin repository, we recomm
 ```
 git remote rm origin
 ```
+
+_or, if you still want to be able to pull from `origin`, just inhibitate pushing to `origin` by:_
+
+```
+ git remote set-url --push origin no_push
+```
