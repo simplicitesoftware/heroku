@@ -11,10 +11,16 @@ public class Launcher {
 
 	public Launcher(String rootPath) throws Exception {
 		String port = System.getenv("TOMCAT_HTTP_PORT");
-		if (port == null || port.length() == 0) port = System.getenv("PORT");
-		if (port != null && port.length() > 0) this.port = Integer.valueOf(port);
+		if (port == null || port.length() == 0)
+			port = System.getenv("PORT");
+		if (port != null && port.length() > 0)
+			this.port = Integer.valueOf(port);
+		System.out.println("--- HTTP p:wq"
+				+ "ort = [" + this.port + "]");
 
-		if (rootPath != null) this.rootPath = rootPath;
+		if (rootPath != null)
+			this.rootPath = rootPath;
+		System.out.println("--- Root webapp path = [" + this.rootPath + "]");
 	}
 
 	public void launch() throws Exception {
@@ -31,7 +37,7 @@ public class Launcher {
 
 		File root= new File(rootPath);
 		String rootAbsPath = root.getAbsolutePath();
-		System.out.print("--- Looking for ROOT webapp in [" + rootAbsPath + "]... ");
+		System.out.print("--- Looking for ROOT webapp... ");
 		if (!root.exists()) {
 			System.out.print("Creating... ");
 			root.mkdirs();
