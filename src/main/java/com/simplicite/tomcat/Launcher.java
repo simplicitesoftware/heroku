@@ -15,8 +15,7 @@ public class Launcher {
 			port = System.getenv("PORT");
 		if (port != null && port.length() > 0)
 			this.port = Integer.valueOf(port);
-		System.out.println("--- HTTP p:wq"
-				+ "ort = [" + this.port + "]");
+		System.out.println("--- HTTP port = [" + this.port + "]");
 
 		if (rootPath != null)
 			this.rootPath = rootPath;
