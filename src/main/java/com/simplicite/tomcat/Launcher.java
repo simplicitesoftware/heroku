@@ -51,6 +51,16 @@ public class Launcher {
 		tomcat.addWebapp("", rootAbsPath);
 		System.out.println("Done");
 
+		// Workaround(?) to get the websockets working.... does not work :-(
+		/*
+		Container[] cs = tomcat.getService().getContainer().findChildren();
+		StandardHost h = (StandardHost)cs[0];
+		cs = h.findChildren();
+		StandardContext ctx = (StandardContext)cs[0];
+		StandardJarScanner js = (StandardJarScanner)ctx.getJarScanner();
+		js.setScanClassPath(true);
+		*/
+
 		tomcat.start();
 
 		Runtime.getRuntime().addShutdownHook(new Thread() {
