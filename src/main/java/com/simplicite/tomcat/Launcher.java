@@ -4,19 +4,21 @@ import java.io.File;
 import java.io.FileOutputStream;
 
 import org.apache.catalina.startup.Tomcat;
+import org.apache.catalina.connector.Connector;
 
 public class Launcher {
-	private int port = 8080;
-	private String rootPath = "webapps/ROOT";
+	private final static int DEFAULT_PORT = 8080;
+	private final static String DEFAULT_ROOTPATH = "webapps/ROOT";
+
+	private int port = 0;
+	private String rootPath = null;
 
 	public Launcher(String rootPath) throws Exception {
-		String port = System.getenv("TOMCAT_HTTP_PORT");
-		if (port == null || port.length() == 0)
-			port = System.getenv("PORT");
+		String port = System.getenv("PORT");
 		if (port != null && port.length() > 0)
 			this.port = Integer.valueOf(port);
 
-		if (rootPath != null)
+		if (rootPath != null && rootPath.length() > 0)
 			this.rootPath = rootPath;
 	}
 
@@ -30,11 +32,19 @@ public class Launcher {
 		System.out.println("--- Tomcat home and base dirs set to [" + tomcat.getServer().getCatalinaHome() + "]");
 
 		tomcat.enableNaming();
+		
+		int p = port == 0 ? DEFAULT_PORT : port;
+		tomcat.setPort(p);
+		System.out.println("--- Tomcat port set to [" + p + "]");
+		
+		if (port != 0) {
+			Connector connector = tomcat.getConnector();
+			connector.setSecure(true);
+			connector.setScheme("https");
+			System.out.println("--- Tomcat connector marked secure and scheme forced to https");
+		}
 
-		tomcat.setPort(port);
-		System.out.println("--- Tomcat port set to [" + port + "]");
-
-		File root= new File(rootPath);
+		File root= new File(rootPath == null ? DEFAULT_ROOTPATH : rootPath);
 		String rootAbsPath = root.getAbsolutePath();
 		System.out.print("--- Looking for ROOT webapp in [" + rootAbsPath + "]... ");
 		if (!root.exists()) {
