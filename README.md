@@ -64,7 +64,7 @@ Then deploy to Heroku by:
 git push heroku master
 ```
 
-_Note: to avoid pushing your changes to the default origin repository, we recommend that you remove the `origin` remote by:_
+**Note**: to avoid pushing your changes to the default origin repository, we recommend that you remove the `origin` remote by:_
 
 ```
 git remote rm origin
@@ -73,5 +73,5 @@ git remote rm origin
 _or, if you still want to be able to pull from `origin`, just inhibitate pushing to `origin` by:_
 
 ```
- git remote set-url --push origin no_push
+git remote set-url --push origin no_push
 ```
