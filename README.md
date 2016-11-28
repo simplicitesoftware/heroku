@@ -1,3 +1,6 @@
+![Simplicit&eacute; Software](http://www.simplicitesoftware.com/logos/logo250.png)
+***
+
 Heroku&reg; template for Simplicit&eacute;&reg;
 ===============================================
 
