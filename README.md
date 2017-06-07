@@ -27,15 +27,11 @@ Run locally
 
 Build the package using Maven with:
 
-```
-mvn package
-```
+	mvn package
 
 Then run the package with:
 
-```
-java -Dfile.encoding="UTF-8" -jar target/tomcat-0.0.1-SNAPSHOT-jar-with-dependencies.jar
-```
+	java -Dfile.encoding="UTF-8" -jar target/tomcat-0.0.1-SNAPSHOT-jar-with-dependencies.jar
 
 NB: a similar run command is in the `Procfile`
 
@@ -44,37 +40,25 @@ Deploy on Heroku
 
 Add the `heroku` remote to the cloned Git repository by creating a new application:
 
-```
-heroku create [<your Heroku app name>]
-```
+	heroku create [<your Heroku app name>]
 
 or, if the application already exists:
 
-```
-heroku git:remote -a <your Heroku app name>
-```
+	heroku git:remote -a <your Heroku app name>
 
 Add and commit your changes locally in the Git repository:
 
-```
-git add <...>
-git commit <...>
-```
+	git add <...>
+	git commit <...>
 
 Then deploy to Heroku by:
 
-```
-git push heroku master
-```
+	git push heroku master
 
 **Note**: to avoid pushing your changes to the default origin repository, we recommend that you remove the `origin` remote by:_
 
-```
-git remote rm origin
-```
+	git remote rm origin
 
 _or, if you still want to be able to pull from `origin`, just inhibitate pushing to `origin` by:_
 
-```
-git remote set-url --push origin no_push
-```
+	git remote set-url --push origin no_push
