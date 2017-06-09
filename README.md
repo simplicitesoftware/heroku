@@ -53,11 +53,11 @@ Add and commit your changes locally in the Git repository:
 
 Then deploy to Heroku by:
 
-	git push heroku master
+	git push [--force] heroku master
 
 **Note**: to avoid pushing your changes to the default origin repository, we recommend that you remove the `origin` remote by:_
 
-	git remote rm origin
+	git remote remove origin
 
 _or, if you still want to be able to pull from `origin`, just inhibitate pushing to `origin` by:_
 
