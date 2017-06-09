@@ -10,13 +10,13 @@
 		type="java.lang.String"
 		override="true" />
 
-	<Resource
-		name="jdbc/test"
-		type="javax.sql.DataSource"
-		auth="Container"
-		maxActive="100" maxIdle="30" maxWait="10000"
-		username="sa" password=""
-		driverClassName="org.hsqldb.jdbcDriver"
-		url="jdbc:hsqldb:file:${catalina.base}/webapps/ROOT/WEB-INF/db/test;shutdown=true;sql.ignore_case=true"/>
+ 	 <Resource
+		name="jdbc/simplicite"
+                type="javax.sql.DataSource"
+                auth="Container"
+                username="${db.username}"
+                password="${db.password}"
+                driverClassName="org.postgresql.Driver"
+                url="jdbc:postgresql://${db.host}:${db.port}/${db.name}" />
 
 </Context>

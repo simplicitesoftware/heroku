@@ -3,7 +3,7 @@
 <%@ page import="java.sql.*" %>
 <pre>
 <%
-DataSource ds = (DataSource)new InitialContext().lookup("java:comp/env/jdbc/test");
+DataSource ds = (DataSource)new InitialContext().lookup("java:comp/env/jdbc/simplicite");
 Connection c = ds.getConnection();
 c.setAutoCommit(false);
 
@@ -27,6 +27,9 @@ while (rs.next()) {
 	out.println(rs.getInt("id") + " = [" + rs.getString("lib") + "]");
 }
 rs.close();
+
+s.executeUpdate("drop table test");
+c.commit();
 
 s.close();
 c.close();
