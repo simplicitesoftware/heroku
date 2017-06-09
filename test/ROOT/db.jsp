@@ -3,35 +3,41 @@
 <%@ page import="java.sql.*" %>
 <pre>
 <%
-DataSource ds = (DataSource)new InitialContext().lookup("java:comp/env/jdbc/simplicite");
-Connection c = ds.getConnection();
-c.setAutoCommit(false);
+try {
+	DataSource ds = (DataSource)new InitialContext().lookup("java:comp/env/jdbc/simplicite");
 
-DatabaseMetaData md = c.getMetaData();
-out.println("Driver = [" + md.getDriverName() + "]");
-out.println("URL = [" + md.getURL() + "]");
-out.println("Database = [" + md.getDatabaseProductName() + " " + md.getDatabaseProductVersion() + "]");
+	Connection c = ds.getConnection();
+	c.setAutoCommit(false);
 
-Statement s = c.createStatement();
+	DatabaseMetaData md = c.getMetaData();
+	out.println("Driver = [" + md.getDriverName() + "]");
+	out.println("URL = [" + md.getURL() + "]");
+	out.println("Database = [" + md.getDatabaseProductName() + " " + md.getDatabaseProductVersion() + "]");
 
-s.executeUpdate("drop table test if exists");
-c.commit();
+	Statement s = c.createStatement();
 
-s.executeUpdate("create table test(id integer, lib varchar(100))");
-s.executeUpdate("insert into test values (1, 'Test 1')");
-s.executeUpdate("insert into test values (2, 'Test 2 - " + new java.util.Date() + "')");
-c.commit();
+	s.executeUpdate("drop table if exists test");
+	c.commit();
 
-ResultSet rs = s.executeQuery("select * from test");
-while (rs.next()) {
-	out.println(rs.getInt("id") + " = [" + rs.getString("lib") + "]");
+	s.executeUpdate("create table test(id integer, lib varchar(100))");
+	s.executeUpdate("insert into test values (1, 'Test 1')");
+	s.executeUpdate("insert into test values (2, 'Test 2 - " + new java.util.Date() + "')");
+	c.commit();
+
+	ResultSet rs = s.executeQuery("select * from test");
+	while (rs.next()) {
+		out.println(rs.getInt("id") + " = [" + rs.getString("lib") + "]");
+	}
+	rs.close();
+
+	s.executeUpdate("drop table test");
+	c.commit();
+
+	s.close();
+	c.close();
+} catch (Exception e) {
+	out.println("Error: " + e.getMessage());
+	e.printStackTrace();
 }
-rs.close();
-
-s.executeUpdate("drop table test");
-c.commit();
-
-s.close();
-c.close();
 %>
 </pre>
