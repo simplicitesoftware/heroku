@@ -41,6 +41,8 @@ NB: a similar run command is in the `Procfile`
 Deploy on Heroku
 ----------------
 
+### Initial deployment
+
 Add the `heroku` remote to the cloned Git repository by creating a new application:
 
 	heroku create [<your Heroku app name>]
@@ -66,11 +68,10 @@ _or, if you still want to be able to pull from `origin`, just inhibitate pushing
 
 	git remote set-url --push origin no_push
 
-Upgrade deployed instance
--------------------------
+### Upgrade deployments
 
-To upgrade a running instance you should resynchronize the **root** webapp, for instance by:
+To upgrade a deployed instance you should resynchronize the **root** webapp, for instance by:
 
 	rsync -auv <template path>/app/ webapps/ROOT
 
-And add, commit and push like described above (as of Simplicit&eacute;&reg; version 4.0, the auto upgrade option `-Dplatform.autoupgrade=true` will apply platform patches at startup).
+And then add, commit and push like described above (as of Simplicit&eacute;&reg; version 4.0, the auto upgrade option `-Dplatform.autoupgrade=true` will apply platform patches at startup).
