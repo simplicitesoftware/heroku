@@ -10,6 +10,7 @@
 		type="java.lang.String"
 		override="true" />
 
+	<!-- Manual configuration of datasource if DATABASE_URL environment variable is not present
 	<Resource
 		name="jdbc/simplicite"
 		type="javax.sql.DataSource"
@@ -19,5 +20,6 @@
 		driverClassName="${db.driver}"
 		maxTotal="${db.maxpoolsize}"
 		url="jdbc:${db.url}" />
+	-->
 
 </Context>

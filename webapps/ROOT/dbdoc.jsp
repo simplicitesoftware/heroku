@@ -23,5 +23,7 @@ out.println("Reading file: " + f);
 List<String> outData = Files.readAllLines(file, Charset.defaultCharset());
 int i = 0;
 for (String l : outData) out.println("Line " + (++i) + " = [" + l + "]");
+
+Files.delete(file);
 %>
 </pre>

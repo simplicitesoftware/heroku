@@ -3,8 +3,10 @@ package com.simplicite.tomcat;
 import java.io.File;
 import java.net.URI;
 
+import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
 import org.apache.catalina.startup.Tomcat;
+import org.apache.tomcat.util.descriptor.web.ContextResource;
 
 public class Launcher {
 	private final static int DEFAULT_PORT = 8080;
@@ -22,44 +24,8 @@ public class Launcher {
 	}
 
 	public void launch() throws Exception {
-		Runtime.getRuntime().addShutdownHook(new Thread() {
-			@Override
-			public void run() {
-				System.out.print("--- Closing... ");
-				System.out.println("Done");
-			}
-		});
-
 		System.setProperty("file.encoding", "UTF-8");
 		System.setProperty("platform.autoupgrade", "true");
-
-		String db = System.getenv("DATABASE_URL");
-		System.err.println(db);
-		if (db!=null)
-		{
-			try {
-				URI uri = new URI(db);
-				if (db.startsWith("postgres:")) {
-					System.setProperty("db.driver", "org.postgresql.Driver");
-					String url = "postgresql://" + uri.getHost() + ':' + uri.getPort() + uri.getPath() + "?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory";
-					System.setProperty("db.url", url);
-					System.setProperty("db.maxpoolsize", "20");
-					System.out.println("--- Configured PostgreSQL database properties with URL [" + url + "]");
-				} else if (db.startsWith("mysql:")) {
-					System.setProperty("db.driver", "com.mysql.jdbc.Driver");
-					String url = "mysql://" + uri.getHost() + ':' + uri.getPort() + uri.getPath() + "?autoReconnect=true&useSSL=false&characterEncoding=utf8&characterResultSets=utf8";
-					System.setProperty("db.url", url);
-					System.setProperty("db.maxpoolsize", "20");
-					System.out.println("--- Configured MySQL database properties with URL [" + url + "]");
-				} else
-					throw new Exception("Unhandled database URL [" + db + "]");
-				String[] userinfo = uri.getUserInfo().split(":");
-				System.setProperty("db.username", userinfo[0]);
-				System.setProperty("db.password", userinfo[1]);
-			} catch (Exception e) {
-				System.out.println("--- Error configuring database properties: " + e.getMessage());
-			}
-		}
 
 		Tomcat tomcat = new Tomcat();
 
@@ -84,17 +50,45 @@ public class Launcher {
 
 		File root = new File(rootPath == null ? "webapps/ROOT" : rootPath);
 		String rootAbsPath = root.getAbsolutePath();
-		System.out.print("--- Looking for ROOT webapp in [" + rootAbsPath + "]... ");
-		if (!root.exists()) {
-			root = new File("test/ROOT");
-			rootAbsPath = root.getAbsolutePath();
-			System.out.print("does not exists, using test webapp in [" + rootAbsPath + "]... ");
-		}
+		System.out.print("--- Deploying ROOT webapp (" + rootAbsPath + ")... ");
+		Context ctx = tomcat.addWebapp("", rootAbsPath);
 		System.out.println("Done");
 
-		System.out.print("--- Deploying ROOT webapp... ");
-		tomcat.addWebapp("", rootAbsPath);
-		System.out.println("Done");
+		ContextResource db = null;
+		String dbURL = System.getenv("DATABASE_URL");
+		if (dbURL!=null)
+		{
+			System.out.print("--- Configuring datasource for ROOT webapp... ");
+			try {
+				URI uri = new URI(dbURL);
+				String driver, url;
+				if (dbURL.startsWith("postgres:")) {
+					driver = "org.postgresql.Driver";
+					url = "postgresql://" + uri.getHost() + ':' + uri.getPort() + uri.getPath() + "?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory";
+				} else if (dbURL.startsWith("mysql:")) {
+					driver = "com.mysql.jdbc.Driver";
+					url = "postgresql://" + uri.getHost() + ':' + uri.getPort() + uri.getPath() + "?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory";
+				} else
+					throw new Exception("Unhandled database vendor");
+
+				db = new ContextResource();
+				db.setName("jdbc/simplicite");
+				db.setAuth("Container");
+				db.setType("javax.sql.DataSource");
+				db.setScope("Sharable");
+				db.setProperty("driverClassName", driver);
+				db.setProperty("url", "jdbc:" + url);
+				String[] userinfo = uri.getUserInfo().split(":");
+				db.setProperty("username", userinfo[0]);
+				db.setProperty("password", userinfo[1]);
+				ctx.getNamingResources().addResource(db);
+
+				System.out.println("Done");
+			} catch (Exception e) {
+				System.out.println("Error: " + e.getMessage());
+				db = null;
+			}
+		}
 
 		// Workaround(?) to get the websockets working.... does not work :-(
 		/*
@@ -105,6 +99,14 @@ public class Launcher {
 		StandardJarScanner js = (StandardJarScanner)ctx.getJarScanner();
 		js.setScanClassPath(true);
 		*/
+
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			@Override
+			public void run() {
+				System.out.print("--- Closing... ");
+				System.out.println("Done");
+			}
+		});
 
 		tomcat.start();
 		tomcat.getServer().await();
