@@ -10,14 +10,14 @@
 		type="java.lang.String"
 		override="true" />
 
- 	 <Resource
+	<Resource
 		name="jdbc/simplicite"
-                type="javax.sql.DataSource"
-                auth="Container"
-                username="${db.username}"
-                password="${db.password}"
-                driverClassName="org.postgresql.Driver"
-				maxActive="${db.maxpoolsize}"
-                url="jdbc:postgresql://${db.host}:${db.port}/${db.name}?ssl=true&amp;sslfactory=org.postgresql.ssl.NonValidatingFactory" />
+		type="javax.sql.DataSource"
+		auth="Container"
+		username="${db.username}"
+		password="${db.password}"
+		driverClassName="org.postgresql.Driver"
+		maxActive="${db.maxpoolsize}"
+		url="jdbc:postgresql://${db.host}:${db.port}/${db.name}?ssl=true&amp;sslfactory=org.postgresql.ssl.NonValidatingFactory" />
 
 </Context>
