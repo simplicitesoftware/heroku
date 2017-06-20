@@ -60,11 +60,19 @@ Then deploy to Heroku by:
 
 	git push [--force] heroku master
 
-**Note**: _to avoid pushing your changes to the default origin repository, we recommend that you remove the `origin` remote by:_
+or if you want to configure `heroku` as the default pustream for pushes:
+
+	 git push --set-upstream heroku master
+
+in this case subsequent pushes will only require:
+
+	git push
+
+**Note**: _to avoid accidentally pushing your changes to the `origin` remote, we recommend that you remove it by:_
 
 	git remote remove origin
 
-_or, if you still want to be able to pull from `origin`, just inhibitate pushing to `origin` by:_
+_or, if you still want to be able to pull from the `origin` remote, just inhibitate pushing to it by:_
 
 	git remote set-url --push origin no_push
 
