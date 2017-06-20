@@ -19,11 +19,9 @@ Clone our [embedded Tomcat template](https://github.com/simplicitesoftware/herok
 Get the Simplicit&eacute;&reg; instance template from our GIT repository
 (see [simplicite.io website](http://www.simplicite.io) for details on how to get access to this repository).
 
-Copy your **root** webapp in the `webapps/ROOT` folder:
+Copy your **root** webapp in the `webapps/ROOT` folder (or leave the default test webapp as is):
 
 	cp -r <template path>/app webapps/ROOT
-
-If this folder does not exists, the test webapp located in `test/ROOT`is used instead.
 
 Run locally
 -----------
