@@ -50,7 +50,7 @@ public class Launcher {
 
 		File root = new File(rootPath == null ? "webapps/ROOT" : rootPath);
 		String rootAbsPath = root.getAbsolutePath();
-		System.out.print("--- Deploying ROOT webapp (" + rootAbsPath + ")... ");
+		System.out.print("--- Deploying ROOT webapp [" + rootAbsPath + "]... ");
 		Context ctx = tomcat.addWebapp("", rootAbsPath);
 		System.out.println("Done");
 
@@ -58,7 +58,7 @@ public class Launcher {
 		String dbURL = System.getenv("DATABASE_URL");
 		if (dbURL!=null)
 		{
-			System.out.print("--- Configuring datasource for ROOT webapp... ");
+			System.out.print("--- Configuring datasource [" + dbURL + "] for ROOT webapp... ");
 			try {
 				URI uri = new URI(dbURL);
 				String driver, url;
