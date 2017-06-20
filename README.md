@@ -23,7 +23,7 @@ Copy your **root** webapp in the `webapps/ROOT` folder:
 
 	cp -r <template path>/app webapps/ROOT
 
-If this folder does not exists, a default minimalistic webapp is created at firt launch. A test root webapp is available in the `test` folder.
+If this folder does not exists, the test webapp located in `test/ROOT`is used instead.
 
 Run locally
 -----------

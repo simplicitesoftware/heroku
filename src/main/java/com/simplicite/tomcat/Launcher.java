@@ -1,7 +1,6 @@
 package com.simplicite.tomcat;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.net.URI;
 
 import org.apache.catalina.connector.Connector;
@@ -9,7 +8,6 @@ import org.apache.catalina.startup.Tomcat;
 
 public class Launcher {
 	private final static int DEFAULT_PORT = 8080;
-	private final static String DEFAULT_ROOTPATH = "webapps/ROOT";
 
 	private int port = 0;
 	private String rootPath = null;
@@ -24,7 +22,13 @@ public class Launcher {
 	}
 
 	public void launch() throws Exception {
-		Tomcat tomcat = new Tomcat();
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			@Override
+			public void run() {
+				System.out.print("--- Closing... ");
+				System.out.println("Done");
+			}
+		});
 
 		System.setProperty("file.encoding", "UTF-8");
 		System.setProperty("platform.autoupgrade", "true");
@@ -34,22 +38,30 @@ public class Launcher {
 		if (db!=null)
 		{
 			try {
+				URI uri = new URI(db);
 				if (db.startsWith("postgres:")) {
-					URI uri = new URI(db);
-					String[] userinfo = uri.getUserInfo().split(":");
 					System.setProperty("db.driver", "org.postgresql.Driver");
 					String url = "postgresql://" + uri.getHost() + ':' + uri.getPort() + uri.getPath() + "?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory";
 					System.setProperty("db.url", url);
-					System.setProperty("db.username", userinfo[0]);
-					System.setProperty("db.password", userinfo[1]);
 					System.setProperty("db.maxpoolsize", "20");
 					System.out.println("--- Configured PostgreSQL database properties with URL [" + url + "]");
+				} else if (db.startsWith("mysql:")) {
+					System.setProperty("db.driver", "com.mysql.jdbc.Driver");
+					String url = "mysql://" + uri.getHost() + ':' + uri.getPort() + uri.getPath() + "?autoReconnect=true&useSSL=false&characterEncoding=utf8&characterResultSets=utf8";
+					System.setProperty("db.url", url);
+					System.setProperty("db.maxpoolsize", "20");
+					System.out.println("--- Configured MySQL database properties with URL [" + url + "]");
 				} else
 					throw new Exception("Unhandled database URL [" + db + "]");
+				String[] userinfo = uri.getUserInfo().split(":");
+				System.setProperty("db.username", userinfo[0]);
+				System.setProperty("db.password", userinfo[1]);
 			} catch (Exception e) {
 				System.out.println("--- Error configuring database properties: " + e.getMessage());
 			}
 		}
+
+		Tomcat tomcat = new Tomcat();
 
 		File f = new File("").getAbsoluteFile();
 		tomcat.setBaseDir(f.getAbsolutePath());
@@ -70,16 +82,13 @@ public class Launcher {
 			System.out.println("--- Tomcat connector marked secure and scheme forced to https");
 		}
 
-		File root= new File(rootPath == null ? DEFAULT_ROOTPATH : rootPath);
+		File root = new File(rootPath == null ? "webapps/ROOT" : rootPath);
 		String rootAbsPath = root.getAbsolutePath();
 		System.out.print("--- Looking for ROOT webapp in [" + rootAbsPath + "]... ");
 		if (!root.exists()) {
-			System.out.print("Creating... ");
-			root.mkdirs();
-			File index = new File(root.getPath() + "/index.jsp");
-			FileOutputStream fos = new FileOutputStream(index);
-			fos.write(new String("It works (<%= new java.util.Date() %>)!").getBytes());
-			fos.close();
+			root = new File("test/ROOT");
+			rootAbsPath = root.getAbsolutePath();
+			System.out.print("does not exists, using test webapp in [" + rootAbsPath + "]... ");
 		}
 		System.out.println("Done");
 
@@ -98,16 +107,6 @@ public class Launcher {
 		*/
 
 		tomcat.start();
-
-		Runtime.getRuntime().addShutdownHook(new Thread() {
-			@Override
-			public void run() {
-				System.out.print("--- Closing... ");
-				// TODO: cleaning cache, temporary and work folders
-				System.out.println("Done");
-			}
-		});
-
 		tomcat.getServer().await();
 	}
 
