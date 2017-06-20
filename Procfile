@@ -1,1 +1,1 @@
-web:   java $JAVA_OPTS -Dfile.encoding=UTF-8 -Ddb.username=mydbusername -Ddb.password=mydbpassword -Ddb.host=mydbhost -Ddb.port=5432 -Ddb.name=mydbname -Dplatform.autoupgrade=true -jar target/tomcat-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+web:   java $JAVA_OPTS -Dfile.encoding=UTF-8 -Ddb.username=mydbusername -Ddb.password=mydbpassword -Ddb.host=mydbhost -Ddb.port=5432 -Ddb.name=mydbname -Ddb.maxpoolsize=20 -Dplatform.autoupgrade=true -jar target/tomcat-0.0.1-SNAPSHOT-jar-with-dependencies.jar
