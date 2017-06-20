@@ -34,7 +34,7 @@ Build the package using Maven with:
 
 Then run the package with:
 
-	java -Dfile.encoding=UTF-8 -Ddb.username=mydbusername -Ddb.password=mydbpassword -Ddb.host=mydbhost -Ddb.port=5432 -Ddb.name=mydbname -Dplatform.autoupgrade=true -jar target/tomcat-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+	java -jar target/tomcat-0.0.1-SNAPSHOT-jar-with-dependencies.jar
 
 NB: a similar run command is in the `Procfile`
 

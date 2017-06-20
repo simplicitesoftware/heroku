@@ -2,9 +2,10 @@ package com.simplicite.tomcat;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.net.URI;
 
-import org.apache.catalina.startup.Tomcat;
 import org.apache.catalina.connector.Connector;
+import org.apache.catalina.startup.Tomcat;
 
 public class Launcher {
 	private final static int DEFAULT_PORT = 8080;
@@ -25,6 +26,31 @@ public class Launcher {
 	public void launch() throws Exception {
 		Tomcat tomcat = new Tomcat();
 
+		System.setProperty("file.encoding", "UTF-8");
+		System.setProperty("platform.autoupgrade", "true");
+
+		String db = System.getenv("DATABASE_URL");
+		System.err.println(db);
+		if (db!=null)
+		{
+			try {
+				if (db.startsWith("postgres:")) {
+					URI uri = new URI(db);
+					String[] userinfo = uri.getUserInfo().split(":");
+					System.setProperty("db.driver", "org.postgresql.Driver");
+					String url = "postgresql://" + uri.getHost() + ':' + uri.getPort() + uri.getPath() + "?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory";
+					System.setProperty("db.url", url);
+					System.setProperty("db.username", userinfo[0]);
+					System.setProperty("db.password", userinfo[1]);
+					System.setProperty("db.maxpoolsize", "20");
+					System.out.println("--- Configured PostgreSQL database properties with URL [" + url + "]");
+				} else
+					throw new Exception("Unhandled database URL [" + db + "]");
+			} catch (Exception e) {
+				System.out.println("--- Error configuring database properties: " + e.getMessage());
+			}
+		}
+
 		File f = new File("").getAbsoluteFile();
 		tomcat.setBaseDir(f.getAbsolutePath());
 		tomcat.getServer().setCatalinaHome(f);
@@ -32,11 +58,11 @@ public class Launcher {
 		System.out.println("--- Tomcat home and base dirs set to [" + tomcat.getServer().getCatalinaHome() + "]");
 
 		tomcat.enableNaming();
-		
+
 		int p = port == 0 ? DEFAULT_PORT : port;
 		tomcat.setPort(p);
 		System.out.println("--- Tomcat port set to [" + p + "]");
-		
+
 		if (port != 0) {
 			Connector connector = tomcat.getConnector();
 			connector.setSecure(true);
