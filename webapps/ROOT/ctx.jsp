@@ -1,17 +1,21 @@
 <%@ page import="javax.naming.*" %>
-<pre>
-<%
-out.println("<p>Context entries<ul>");
-try {
-	InitialContext ctx = new InitialContext();
-	NamingEnumeration<NameClassPair> list = ctx.list("java:comp/env" );
+<%!
+private static final void listContext(JspWriter out, Context ctx, String indent) throws Exception {
+	NamingEnumeration<Binding> list = ctx.listBindings("");
 	while (list.hasMore()) {
-		out.println("<li>" + list.next().getName() + "</li>");
+		Binding item = (Binding)list.next();
+		String className = item.getClassName();
+		String name = item.getName();
+		out.println(indent + className + " " + name + " = " + item.getObject().toString());
+		Object o = item.getObject();
+		if (o instanceof javax.naming.Context) {
+			listContext(out, (Context) o, indent + "\t");
+		}
 	}
-} catch (Exception e) {
-	out.println("Error: " + e.getMessage());
-	e.printStackTrace();
 }
-out.println("</ul></p>");
 %>
-</pre>
+<%
+out.println("<pre>");
+listContext(out, (Context)new InitialContext().lookup("java:comp/env"), "");
+out.println("</pre>");
+%>
