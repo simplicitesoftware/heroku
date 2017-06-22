@@ -1,6 +1,6 @@
 <%@ page import="javax.script.*" %>
 <html>
-<head><title>Index</title></head>
+<head><title>Sripting tests</title></head>
 <body>
 <pre>
 <%

@@ -1,6 +1,6 @@
 <%@page import="java.nio.charset.Charset"%>
 <html>
-<head><title>Index</title></head>
+<head><title>Basic tests</title></head>
 <body>
 <pre>
 It works!

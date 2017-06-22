@@ -54,7 +54,9 @@ public class Launcher {
 		System.out.println("Done");
 
 		ContextResource db = null;
-		String dbURL = System.getenv("DATABASE_URL");
+		String dbEnvVarName = System.getProperty("db.envvar.name");
+		if (dbEnvVarName == null) dbEnvVarName = "DATABASE_URL";
+		String dbURL = System.getenv(dbEnvVarName);
 		if (dbURL!=null)
 		{
 			System.out.print("--- Configuring datasource [" + dbURL + "] for ROOT webapp... ");
@@ -74,6 +76,7 @@ public class Launcher {
 				db.setName("jdbc/simplicite");
 				db.setAuth("Container");
 				db.setType("javax.sql.DataSource");
+				db.setProperty("factory", "org.apache.tomcat.jdbc.pool.DataSourceFactory");
 				db.setScope("Sharable");
 				db.setProperty("driverClassName", driver);
 				db.setProperty("url", "jdbc:" + url);

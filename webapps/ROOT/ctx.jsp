@@ -1,6 +1,6 @@
 <%@ page import="javax.naming.*" %>
 <html>
-<head><title>Index</title></head>
+<head><title>JNDI context tests</title></head>
 <body>
 <%!
 private static final void listContext(JspWriter out, Context ctx, String indent) throws Exception {

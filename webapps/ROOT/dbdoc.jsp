@@ -3,7 +3,7 @@
 <%@ page import="java.nio.file.*" %>
 <%@page import="java.nio.charset.*"%>
 <html>
-<head><title>Index</title></head>
+<head><title>DBDoc tests</title></head>
 <body>
 <pre>
 <%
