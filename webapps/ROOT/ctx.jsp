@@ -1,4 +1,7 @@
 <%@ page import="javax.naming.*" %>
+<html>
+<head><title>Index</title></head>
+<body>
 <%!
 private static final void listContext(JspWriter out, Context ctx, String indent) throws Exception {
 	NamingEnumeration<Binding> list = ctx.listBindings("");
@@ -16,6 +19,14 @@ private static final void listContext(JspWriter out, Context ctx, String indent)
 %>
 <pre>
 <%
-listContext(out, (Context)new InitialContext().lookup("java:comp/env"), "");
+try {
+	listContext(out, (Context)new InitialContext().lookup("java:comp/env"), "");
+} catch (Exception e) {
+	out.println("Error: " + e.getMessage());
+	e.printStackTrace();
+}
+
 %>
 </pre>
+</body>
+</html>

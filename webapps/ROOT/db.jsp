@@ -1,6 +1,9 @@
 <%@ page import="javax.naming.*" %>
 <%@ page import="javax.sql.*" %>
 <%@ page import="java.sql.*" %>
+<html>
+<head><title>Index</title></head>
+<body>
 <pre>
 <%
 try {
@@ -41,3 +44,5 @@ try {
 }
 %>
 </pre>
+</body>
+</html>
