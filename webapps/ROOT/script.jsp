@@ -7,8 +7,11 @@
 try {
 	ScriptEngineManager factory = new ScriptEngineManager();
 	ScriptEngine engine = factory.getEngineByName("javascript");
-	engine.put("input", "Hello");
-	engine.eval("var output = input + ' world !'; java.lang.System.out.println(output);");
+	engine.put("input", "It");
+	engine.eval(
+		"var output = input + ' works!';\n" +
+		"java.lang.System.out.println('Debug: ' + output);"
+	);
 	out.println(engine.get("output"));
 } catch (Exception e) {
 	out.println("Error: " + e.getMessage());
