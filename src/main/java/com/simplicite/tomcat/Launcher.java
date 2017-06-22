@@ -24,7 +24,6 @@ public class Launcher {
 	}
 
 	public void launch() throws Exception {
-		System.setProperty("file.encoding", "UTF-8");
 		System.setProperty("platform.autoupgrade", "true");
 
 		Tomcat tomcat = new Tomcat();

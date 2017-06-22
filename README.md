@@ -32,7 +32,7 @@ Build the package using Maven with:
 
 Then run the package with:
 
-	java -jar target/tomcat-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+	java -Dfile.encoding=UTF-8 -jar target/tomcat-0.0.1-SNAPSHOT-jar-with-dependencies.jar
 
 NB: a similar run command is in the `Procfile`
 

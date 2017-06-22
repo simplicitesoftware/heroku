@@ -14,8 +14,8 @@ private static final void listContext(JspWriter out, Context ctx, String indent)
 	}
 }
 %>
+<pre>
 <%
-out.println("<pre>");
 listContext(out, (Context)new InitialContext().lookup("java:comp/env"), "");
-out.println("</pre>");
 %>
+</pre>
