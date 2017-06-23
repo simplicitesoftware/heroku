@@ -10,7 +10,10 @@
 		type="java.lang.String"
 		override="true" />
 
-	<!-- Manual configuration of datasource if DATABASE_URL environment variable is not present
+	<!--
+	Manual configuration of datasource if DATABASE_URL environment variable is not present
+	Don't use the org.apache.tomcat.jdbc.pool.DataSourceFactory with embedded HSQLDB
+	-->
 	<Resource
 		name="jdbc/simplicite"
 		type="javax.sql.DataSource"
