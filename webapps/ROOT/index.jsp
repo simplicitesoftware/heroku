@@ -23,7 +23,7 @@ try
 {
 	int port = request.getServerPort();
 	String scheme = request.getScheme();
-	out.println("- Server URL: " + scheme + "://" + request.getServerName() + ("http".equals(scheme) && port==80 || "https".equals(scheme) && port==443 ? "" : ":" + port));
+	out.println("- Server URL: " + scheme + "://" + request.getServerName() + ("http".equals(scheme) && port==80 || "https".equals(scheme) && port==443 ? "" : ":" + port) + " (secure: " + request.isSecure() + ")");
 }
 catch (Exception e)
 {
