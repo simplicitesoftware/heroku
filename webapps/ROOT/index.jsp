@@ -19,6 +19,16 @@ catch (Exception e)
 {
 	out.println("- Unable to get server info (" + e.getMessage() + ")"); 
 }
+try
+{
+	int port = request.getServerPort();
+	String scheme = request.getScheme();
+	out.println("- Server URL: " + scheme + "://" + request.getServerName() + ("http".equals(scheme) && port==80 || "https".equals(scheme) && port==443 ? "" : ":" + port));
+}
+catch (Exception e)
+{
+	out.println("- Unable to get server URL (" + e.getMessage() + ")"); 
+}
 %>
 Specific:
 - Auto-upgrade: <%= System.getProperty("platform.autoupgrade")  %>
