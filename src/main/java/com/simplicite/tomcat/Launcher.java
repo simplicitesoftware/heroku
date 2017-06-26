@@ -24,7 +24,8 @@ public class Launcher {
 	}
 
 	public void launch() throws Exception {
-		System.setProperty("platform.autoupgrade", "true");
+		//System.setProperty("platform.autoupgrade", "true");
+		//System.setProperty("server.websocket", "false");
 
 		Tomcat tomcat = new Tomcat();
 
@@ -76,7 +77,6 @@ public class Launcher {
 				db.setName("jdbc/simplicite");
 				db.setAuth("Container");
 				db.setType("javax.sql.DataSource");
-				db.setProperty("factory", "org.apache.tomcat.jdbc.pool.DataSourceFactory");
 				db.setScope("Sharable");
 				db.setProperty("driverClassName", driver);
 				db.setProperty("url", "jdbc:" + url);
